@@ -1,0 +1,11 @@
+version: '2'
+services:
+  db:
+    image: "postgres:alpine"
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    ports:
+      - "5432:5432"
+    volumes:
+       - /var/lib/postgresql/data
