@@ -11,8 +11,8 @@ mndata = MNIST('data')
 
 images, labels = mndata.load_training()
 
-images = images
-labels = labels
+images = images[:5000]
+labels = labels[:5000]
 
 def threshold(array):
     for i, val in enumerate(array):
@@ -30,7 +30,7 @@ for image in chain(train_images, test_images):
 img=np.array(train_images[1])
 
 
-clf = svm.SVC()
+clf = svm.SVC(probability=True)
 clf.fit(train_images, train_labels)
 print(clf.score(test_images, test_labels))
 
@@ -49,4 +49,4 @@ nbalanced = np.array(balanced)
 # plt.imshow(np.array(test_images[2]).reshape((28,28)), cmap='gray')
 # plt.show()
 results=clf.predict(balanced)
-print(results)
+print(results, clf.predict_proba([balanced]))
