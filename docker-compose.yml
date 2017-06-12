@@ -2,10 +2,9 @@ version: '2'
 services:
 
   app:
-    build:
-      dockerfile: Dockerfile
+    build: .
     depends_on:
-      - postgres
+      - db
 
   db:
     image: "postgres:alpine"
@@ -14,8 +13,8 @@ services:
       - POSTGRES_PASSWORD=test
     ports:
       - "5432:5432"
-      - volumes:
-        - postgres_data:/var/lib/postgresql/data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data: {}
+  postgres_data:
