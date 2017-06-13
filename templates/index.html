@@ -3,6 +3,9 @@
     <head>
         <meta charset="utf-8">
         <title>Image recognition</title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
         <script type="text/javascript">
         var canvas, ctx, flag = false,
             prevX = 0,
@@ -54,8 +57,18 @@
         }
 
         function save() {
-            console.log('send');
+            console.log("sending...");
 
+            $.ajax({
+                url:"/recognize_image",
+                data:{img_data:'test',img_id:'test',name:'test'},
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                success:function(result)
+                {
+                    console.log(result);
+                }
+            });
         }
 
         function findxy(res, e) {
