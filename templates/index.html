@@ -35,35 +35,6 @@
             console.log(canvas)
         }
 
-        function color(obj) {
-            switch (obj.id) {
-                case "green":
-                    x = "green";
-                    break;
-                case "blue":
-                    x = "blue";
-                    break;
-                case "red":
-                    x = "red";
-                    break;
-                case "yellow":
-                    x = "yellow";
-                    break;
-                case "orange":
-                    x = "orange";
-                    break;
-                case "black":
-                    x = "black";
-                    break;
-                case "white":
-                    x = "white";
-                    break;
-            }
-            if (x == "white") y = 14;
-            else y = 2;
-
-        }
-
         function draw() {
             ctx.beginPath();
             ctx.moveTo(prevX, prevY);
@@ -83,10 +54,8 @@
         }
 
         function save() {
-            document.getElementById("canvasimg").style.border = "2px solid";
-            var dataURL = canvas.toDataURL();
-            document.getElementById("canvasimg").src = dataURL;
-            document.getElementById("canvasimg").style.display = "inline";
+            console.log('send');
+
         }
 
         function findxy(res, e) {
@@ -123,11 +92,9 @@
     </head>
     <body onload="init()">
         <p>Draw your number here: </p>
-        <div style="position:absolute;top:20%;left:43%;">Eraser</div>
-        <div style="position:absolute;top:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
-        <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
-        <input type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;top:55%;left:10%;">
-        <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
         <canvas id="canvas" width="28" height="28" style="background:green;"></canvas>
+        <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+        <input type="button" value="Try it!" id="btn" size="30" onclick="save()" style="position:absolute;top:55%;left:10%;">
+        <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
     </body>
 </html>
