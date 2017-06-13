@@ -3,6 +3,10 @@ services:
 
   app:
     build: .
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=True
     ports:
       - "8000:8000"
     command: python app.py 0.0.0.0:8000
