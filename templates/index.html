@@ -56,14 +56,12 @@
             }
         }
 
-        function save() {
-            console.log("sending...");
-
+        function send() {
+            var imgData = document.getElementById("canvas").toDataURL("image/jpeg");
             $.ajax({
                 url:"/recognize_image",
-                data:{img_data:'test',img_id:'test',name:'test'},
-                type:"POST",
-                contentType:"application/x-www-form-urlencoded",
+                data: {img: imgData},
+                type: "POST",
                 success:function(result)
                 {
                     console.log(result);
@@ -107,7 +105,7 @@
         <p>Draw your number here: </p>
         <canvas id="canvas" width="28" height="28" style="background:green;"></canvas>
         <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
-        <input type="button" value="Try it!" id="btn" size="30" onclick="save()" style="position:absolute;top:55%;left:10%;">
+        <input type="button" value="Try it!" id="btn" size="30" onclick="send()" style="position:absolute;top:55%;left:10%;">
         <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
     </body>
 </html>

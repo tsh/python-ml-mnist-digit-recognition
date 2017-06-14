@@ -1,5 +1,7 @@
 import os
-from flask import Flask, render_template, request
+import base64
+import re
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -12,6 +14,9 @@ def hello_world():
 @app.route('/recognize_image', methods=['POST'])
 def recognize_image():
     print (request.form)
+    image_data = re.sub(r'^data:image/.+;base64,', '', request.form['img'])
+    print (image_data)
+    return jsonify({'status': 'ok'})
 
 if __name__ == "__main__":
     app.run(host=os.environ.get('HOST', '0.0.0.0'),
