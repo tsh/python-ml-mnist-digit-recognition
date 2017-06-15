@@ -1,8 +1,10 @@
-import os
 import base64
+from statistics import mean
+import os
 import re
 import io
 from PIL import Image
+import numpy as np
 from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
@@ -13,11 +15,33 @@ def hello_world():
     return render_template('index.html')
 
 
+def threshold(array):
+    for i, val in enumerate(array):
+        if val > 127:
+            array[i] = 1
+        else:
+            array[i] = 0
+
+
 @app.route('/recognize_image', methods=['POST'])
 def recognize_image():
     img_data = re.sub(r'^data:image/.+;base64,', '', request.form['img'])
     img_bytes = base64.b64decode(img_data)
     img = Image.open(io.BytesIO(img_bytes))
+    iar = np.array(img)
+    np.delete(iar, [3], axis=1)
+    balanced = []
+    for row in iar:
+        for pix in row:
+            balanced.append(mean(pix))
+
+    threshold(balanced)
+    nbalanced = np.array(balanced)
+
+    from sklearn.datasets import fetch_mldata
+    mnist = fetch_mldata('MNIST original', data_home='data')
+    print(mnist.data.shape)
+
     return jsonify({'status': 'ok'})
 
 
