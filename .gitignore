@@ -3,6 +3,7 @@
 *.jpg
 *.png
 .env
+data
 
 
 ### JetBrains template
