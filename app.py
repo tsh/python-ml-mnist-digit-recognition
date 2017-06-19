@@ -3,9 +3,11 @@ from statistics import mean
 import os
 import re
 import io
+from flask import Flask, render_template, request, jsonify
 from PIL import Image
 import numpy as np
-from flask import Flask, render_template, request, jsonify
+from sklearn.model_selection import train_test_split
+
 
 app = Flask(__name__)
 
@@ -40,7 +42,9 @@ def recognize_image():
 
     from sklearn.datasets import fetch_mldata
     mnist = fetch_mldata('MNIST original', data_home='data')
-    print(mnist.data.shape)
+    print(mnist.data)
+    print(type(mnist))
+    import ipdb;ipdb.set_trace()
 
     return jsonify({'status': 'ok'})
 
