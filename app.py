@@ -2,6 +2,7 @@ import base64
 from statistics import mean
 import os
 import re
+import threading
 import io
 from flask import Flask, render_template, request, jsonify
 from PIL import Image
@@ -40,16 +41,23 @@ def recognize_image():
     threshold(balanced)
     nbalanced = np.array(balanced)
 
-    from sklearn.datasets import fetch_mldata
-    mnist = fetch_mldata('MNIST original', data_home='data')
-    print(mnist.data)
-    print(type(mnist))
-    import ipdb;ipdb.set_trace()
 
     return jsonify({'status': 'ok'})
 
 
 if __name__ == "__main__":
+    mnist_urls = ['http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz',
+                  'http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz',
+                  'http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz',
+                  'http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz']
+
+    def worker(url):
+        pass
+
+    for url in mnist_urls:
+        t = threading.Thread(target=worker, args=(url,))
+
+
     app.run(host=os.environ.get('HOST', '0.0.0.0'),
             port=int(os.environ.get('PORT', '8000')),
             debug=os.environ.get('DEBUG', False))
