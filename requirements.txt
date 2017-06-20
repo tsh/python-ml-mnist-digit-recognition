@@ -2,6 +2,7 @@ Flask
 psycopg2
 numpy
 pillow
+python-mnist
 sklearn
 scipy
 ipdb
