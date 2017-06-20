@@ -1,8 +1,10 @@
 import asyncio
 import gzip
 import os
-import tarfile
+
 import requests
+from mnist import MNIST
+from sklearn.model_selection import train_test_split
 
 
 mnist_urls = ['http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz',
@@ -38,6 +40,7 @@ ioloop.run_until_complete(wait_tasks)
 ioloop.close()
 
 
+# TODO: fix gzip unpacking
 for gname in mnist_names:
     out_name = gname.split('.')[0]
     res_file = os.path.join(data_dir, out_name)
@@ -45,3 +48,7 @@ for gname in mnist_names:
         with gzip.open(res_file, 'wb') as output:
             content = input.read()
             output.write(content)
+
+mndata = MNIST('data')
+images, labels = mndata.load_training()
+train_images, test_images, train_labels, test_labels = train_test_split(images, labels, train_size=0.8, random_state=0)
