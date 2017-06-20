@@ -46,18 +46,6 @@ def recognize_image():
 
 
 if __name__ == "__main__":
-    mnist_urls = ['http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz',
-                  'http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz',
-                  'http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz',
-                  'http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz']
-
-    def worker(url):
-        pass
-
-    for url in mnist_urls:
-        t = threading.Thread(target=worker, args=(url,))
-
-
     app.run(host=os.environ.get('HOST', '0.0.0.0'),
             port=int(os.environ.get('PORT', '8000')),
             debug=os.environ.get('DEBUG', False))
