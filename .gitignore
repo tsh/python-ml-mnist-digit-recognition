@@ -4,6 +4,8 @@
 *.png
 .env
 data
+### pickled models
+*.pkl
 
 
 ### JetBrains template
