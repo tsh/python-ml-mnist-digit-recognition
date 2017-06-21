@@ -43,15 +43,22 @@ def get_mnist():
     ioloop.run_until_complete(wait_tasks)
     ioloop.close()
 
+    for f in ['train-images-idx3-ubyte.gz', 'train-labels-idx1-ubyte.gz', 't10k-images-idx3-ubyte.gz', 't10k-labels-idx1-ubyte.gz']:
+        out = f.split('.')[0]
+        gz = gzip.GzipFile('data/'+f)
+        o = open('data/'+out, 'wb')
+        o.write(gz.read())
+        gz.close()
+        o.close()
 
-    # TODO: fix gzip unpacking
-    for gname in mnist_names:
-        out_name = gname.split('.')[0]
-        res_file = os.path.join(data_dir, out_name)
-        with gzip.open(gname, 'rb') as input:
-            with gzip.open(res_file, 'wb') as output:
-                content = input.read()
-                output.write(content)
+    # # TODO: fix gzip unpacking
+    # for gname in mnist_names:
+    #     out_name = gname.split('.')[0]
+    #     res_file = os.path.join(data_dir, out_name)
+    #     with gzip.open(gname, 'rb') as input:
+    #         with gzip.open(res_file, 'wb') as output:
+    #             content = input.read()
+    #             output.write(content)
 
 
 def prep_model():
@@ -65,8 +72,8 @@ def prep_model():
             else:
                 array[i] = 0
 
-    images = images[:1000]
-    labels = labels[:1000]
+    images = images[:100]
+    labels = labels[:100]
 
     train_images, test_images, train_labels, test_labels = train_test_split(images, labels, train_size=0.8, random_state=0)
     for image in chain(train_images, test_images):
@@ -80,5 +87,5 @@ def prep_model():
 
 
 if __name__ == '__main__':
-    # get_mnist()
+    get_mnist()
     prep_model()
