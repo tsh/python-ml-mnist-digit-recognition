@@ -1,9 +1,10 @@
 Flask
 psycopg2
 numpy
-pillow
+Pillow
 python-mnist
-sklearn
+scikit-learn==0.18.1
 scipy
 ipdb
+joblib
 requests
