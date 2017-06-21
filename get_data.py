@@ -5,8 +5,10 @@ from itertools import chain
 
 import requests
 from mnist import MNIST
+import sklearn
 from sklearn import svm
 from sklearn.model_selection import train_test_split
+from sklearn.externals import joblib
 
 
 def get_mnist():
@@ -73,6 +75,8 @@ def prep_model():
     clf = svm.SVC(probability=True)
     clf.fit(train_images, train_labels)
     print(clf.score(test_images, test_labels))
+    joblib.dump(clf, 'svc.pkl')
+    print(sklearn.__version__)
 
 
 if __name__ == '__main__':
