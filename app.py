@@ -2,12 +2,11 @@ import base64
 from statistics import mean
 import os
 import re
-import threading
 import io
 from flask import Flask, render_template, request, jsonify
 from PIL import Image
 import numpy as np
-from sklearn.model_selection import train_test_split
+from sklearn.externals import joblib
 
 
 app = Flask(__name__)
@@ -40,9 +39,10 @@ def recognize_image():
 
     threshold(balanced)
     nbalanced = np.array(balanced)
-
-
-    return jsonify({'status': 'ok'})
+    clf = joblib.load('svc.pkl')
+    results = clf.predict([balanced])
+    return jsonify({'status': 'ok',
+                    'svc': int(results[0])})
 
 
 if __name__ == "__main__":

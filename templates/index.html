@@ -62,6 +62,7 @@
                 success:function(result)
                 {
                     console.log(result);
+                    $("#svc-result").text(result['svc']);
                 }
             });
         }
@@ -102,6 +103,7 @@
         <p>Draw your number here: </p>
         <canvas id="canvas" width="28" height="28" style="background:green;"></canvas>
         <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+        <div id="svc-result"></div>
         <input type="button" value="Try it!" id="btn" size="30" onclick="send()" style="position:absolute;top:55%;left:10%;">
         <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
     </body>
