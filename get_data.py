@@ -17,15 +17,14 @@ def get_mnist():
                   'http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz',
                   'http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz']
 
-    mnist_names = []
-    data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
-    if not os.path.exists(data_dir):
-        os.makedirs(data_dir)
+
+    DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
 
     async def download(url):
         fname = url.split('/')[-1]
-        dest = os.path.join(data_dir, fname)
-        mnist_names.append(dest)
+        dest = os.path.join(DATA_DIR, fname)
 
         if os.path.isfile(dest):
             return
@@ -43,22 +42,12 @@ def get_mnist():
     ioloop.run_until_complete(wait_tasks)
     ioloop.close()
 
-    for f in ['train-images-idx3-ubyte.gz', 'train-labels-idx1-ubyte.gz', 't10k-images-idx3-ubyte.gz', 't10k-labels-idx1-ubyte.gz']:
-        out = f.split('.')[0]
-        gz = gzip.GzipFile('data/'+f)
-        o = open('data/'+out, 'wb')
-        o.write(gz.read())
-        gz.close()
-        o.close()
-
-    # # TODO: fix gzip unpacking
-    # for gname in mnist_names:
-    #     out_name = gname.split('.')[0]
-    #     res_file = os.path.join(data_dir, out_name)
-    #     with gzip.open(gname, 'rb') as input:
-    #         with gzip.open(res_file, 'wb') as output:
-    #             content = input.read()
-    #             output.write(content)
+    for gzipped in os.listdir(DATA_DIR):
+        gf = gzip.GzipFile(os.path.join(DATA_DIR, gzipped))
+        out_name = os.path.join(DATA_DIR, os.path.basename(gzipped).split('.')[0])
+        with open(out_name, 'wb') as out:
+            out.write(gf.read())
+        gf.close()
 
 
 def prep_model():
