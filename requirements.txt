@@ -1,6 +1,8 @@
+bokeh==0.12.6
 Flask
 psycopg2
 numpy
+pandas
 Pillow
 python-mnist
 scikit-learn==0.18.1

@@ -3,10 +3,14 @@ from statistics import mean
 import os
 import re
 import io
+
 from flask import Flask, render_template, request, jsonify
+import pandas as pd
 from PIL import Image
 import numpy as np
 from sklearn.externals import joblib
+from bokeh.embed import components
+from bokeh.charts import Bar, Histogram
 from utils import threshold
 
 
@@ -33,9 +37,16 @@ def recognize_image():
     threshold(balanced)
     nbalanced = np.array(balanced)
     clf = joblib.load('svc.pkl')
-    results = clf.predict([balanced])
+    results = clf.predict([nbalanced])
+    df = pd.DataFrame(np.random.randn(6,4), index=[10,20,30,40,50,60], columns=list('ABCD'))
+    # p = Bar(df, 'cyl', values='B', title="SVC probability")
+    p = Histogram(df['A'])
+    plot_script, plot_div = components(p)
+
     return jsonify({'status': 'ok',
-                    'svc': int(results[0])})
+                    'svc': int(results[0]),
+                    'bokeh_script': plot_script,
+                    'bokeh_div': plot_div})
 
 
 if __name__ == "__main__":
