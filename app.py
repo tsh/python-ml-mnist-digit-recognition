@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, jsonify
 from PIL import Image
 import numpy as np
 from sklearn.externals import joblib
+from utils import threshold
 
 
 app = Flask(__name__)
@@ -15,14 +16,6 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     return render_template('index.html')
-
-
-def threshold(array):
-    for i, val in enumerate(array):
-        if val > 127:
-            array[i] = 1
-        else:
-            array[i] = 0
 
 
 @app.route('/recognize_image', methods=['POST'])

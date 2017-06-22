@@ -9,6 +9,7 @@ import sklearn
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
+from utils import threshold
 
 
 def get_mnist():
@@ -53,13 +54,6 @@ def get_mnist():
 def prep_model():
     mndata = MNIST('data')
     images, labels = mndata.load_training()
-
-    def threshold(array):
-        for i, val in enumerate(array):
-            if val > 127:
-                array[i] = 1
-            else:
-                array[i] = 0
 
     images = images[:100]
     labels = labels[:100]
