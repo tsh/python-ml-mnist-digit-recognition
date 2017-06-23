@@ -65,7 +65,7 @@
                 success:function(result)
                 {
                     console.log(result);
-                    $("#svc-result").text(result['svc']);
+                    $("#svc-result").text('SVC: ' + result['svc']);
                     $("#bokeh-div").append(result['bokeh_div']);
                     $("#bokeh-js").append(result['bokeh_js']);
                 }

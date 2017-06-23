@@ -41,7 +41,7 @@ def recognize_image():
     # Render chart
     d = {'values': clf.predict_proba([nbalanced])[0]}
     df = pd.DataFrame(d)
-    p = Bar(df, values='values', label='index', title="SVC Probability")
+    p = Bar(df, values='values', label='index', title="SVC Probability", legend=False, toolbar_location=None)
 
     plot_script, plot_div = components(p)
 
