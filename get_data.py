@@ -12,14 +12,20 @@ from sklearn.externals import joblib
 from utils import threshold
 
 
+DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
+CLASSIFIERS_DIR = os.path.abspath(os.path.abspath(os.path.join(os.path.dirname(__file__), 'classifiers')))
+
+
 def get_mnist():
+    """
+    Download and unpack MNIST data.
+    :return: 
+    """
     mnist_urls = ['http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz',
                   'http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz',
                   'http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz',
                   'http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz']
 
-
-    DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
     if not os.path.exists(DATA_DIR):
         os.makedirs(DATA_DIR)
 
@@ -52,6 +58,9 @@ def get_mnist():
 
 
 def prep_model():
+    """
+    Build and train models and save them for future use. 
+    """
     mndata = MNIST('data')
     images, labels = mndata.load_training()
 
@@ -65,7 +74,9 @@ def prep_model():
     clf = svm.SVC(probability=True)
     clf.fit(train_images, train_labels)
     print(clf.score(test_images, test_labels))
-    joblib.dump(clf, 'svc.pkl')
+    if not os.path.exists(CLASSIFIERS_DIR):
+        os.makedirs(CLASSIFIERS_DIR)
+    joblib.dump(clf, os.path.join(CLASSIFIERS_DIR, 'svc.pkl'))
     print(sklearn.__version__)
 
 

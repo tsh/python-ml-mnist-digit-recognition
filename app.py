@@ -13,6 +13,8 @@ from bokeh.embed import components
 from bokeh.charts import Bar, Histogram
 from utils import threshold
 
+from get_data import CLASSIFIERS_DIR, DATA_DIR, get_mnist, prep_model
+
 
 app = Flask(__name__)
 
@@ -36,7 +38,7 @@ def recognize_image():
 
     threshold(balanced)
     nbalanced = np.array(balanced)
-    clf = joblib.load('svc.pkl')
+    clf = joblib.load(os.path.join(CLASSIFIERS_DIR, 'svc.pkl'))
     results = clf.predict([nbalanced])
     # Render chart
     d = {'values': clf.predict_proba([nbalanced])[0]}
@@ -52,6 +54,12 @@ def recognize_image():
 
 
 if __name__ == "__main__":
+    # Check if we have trained models.
+    if not os.path.exists(CLASSIFIERS_DIR):
+        if not os.path.exists(DATA_DIR):
+            get_mnist()
+        prep_model()
+
     app.run(host=os.environ.get('HOST', '0.0.0.0'),
             port=int(os.environ.get('PORT', '8000')),
             debug=os.environ.get('DEBUG', False))
