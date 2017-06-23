@@ -38,9 +38,11 @@ def recognize_image():
     nbalanced = np.array(balanced)
     clf = joblib.load('svc.pkl')
     results = clf.predict([nbalanced])
-    df = pd.DataFrame(np.random.randn(6,4), index=[10,20,30,40,50,60], columns=list('ABCD'))
-    # p = Bar(df, 'cyl', values='B', title="SVC probability")
-    p = Histogram(df['A'])
+    # Render chart
+    d = {'values': clf.predict_proba([nbalanced])[0]}
+    df = pd.DataFrame(d)
+    p = Bar(df, values='values', label='index', title="SVC Probability")
+
     plot_script, plot_div = components(p)
 
     return jsonify({'status': 'ok',
