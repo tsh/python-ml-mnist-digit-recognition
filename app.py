@@ -45,7 +45,7 @@ def recognize_image():
 
     return jsonify({'status': 'ok',
                     'svc': int(results[0]),
-                    'bokeh_script': plot_script,
+                    'bokeh_js': plot_script,
                     'bokeh_div': plot_div})
 
 
