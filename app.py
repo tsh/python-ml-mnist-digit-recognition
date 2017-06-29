@@ -29,6 +29,9 @@ def recognize_image():
     img_data = re.sub(r'^data:image/.+;base64,', '', request.form['img'])
     img_bytes = base64.b64decode(img_data)
     img = Image.open(io.BytesIO(img_bytes))
+
+    img.save('client_digit.png')
+
     iar = np.array(img)
     np.delete(iar, [3], axis=1)
     balanced = []

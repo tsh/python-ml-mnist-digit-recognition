@@ -57,7 +57,8 @@
         }
 
         function send() {
-            var imgData = document.getElementById("canvas").toDataURL("image/jpeg");
+            var imgData = document.getElementById("canvas").toDataURL("image/png");
+            
             $.ajax({
                 url:"/recognize_image",
                 data: {img: imgData},
@@ -106,8 +107,9 @@
     </head>
     <body onload="init()">
         <p>Draw your number here: </p>
-        <canvas id="canvas" width="28" height="28" style="background:green;"></canvas>
+        <canvas id="canvas" width="28" height="28" style="border-style: dotted;"></canvas>
         <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+        <canvas id="canvas-reseult" width="28" height="28"></canvas>
         <div id="svc-result"></div>
         <div id="bokeh-div"></div>
         <div id="bokeh-js"></div>
