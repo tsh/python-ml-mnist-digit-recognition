@@ -66,7 +66,8 @@
                 success:function(result)
                 {
                     console.log(result);
-                    $("#svc-result").text('SVC: ' + result['svc']['predicted']);
+                    $("#svc-result").text('SVC predicted: ' + result['svc']['predicted']
+                        + '; SVC `predict_proba` max value for: ' + result['svc']['prob']);
                     $("#bokeh-div").append(result['svc']['bokeh_div']);
                     $("#bokeh-js").append(result['svc']['bokeh_js']);
                 }

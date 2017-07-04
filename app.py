@@ -36,10 +36,11 @@ def recognize_image():
     threshold(flat)
     clf = joblib.load(os.path.join(CLASSIFIERS_DIR, 'svc.pkl'))
     results = clf.predict([flat])
+    prob = clf.predict_proba([flat])[0]
     print (results, clf.decision_function([flat]))
+    print (prob, np.where(prob == prob.max()), type(np.where(prob == prob.max())[0][0]))
     # Render chart
-    d = {'values': clf.predict_proba([flat])[0]}
-    print (d['values'])
+    d = {'values': prob}
     df = pd.DataFrame(d)
     p = Bar(df, values='values', label='index', title="SVC predict_proba", legend=False, toolbar_location=None)
 
@@ -47,6 +48,7 @@ def recognize_image():
 
     return jsonify({'status': 'ok',
                     'svc': {'predicted': int(results[0]),
+                            'prob': int(np.where(prob == prob.max())[0][0]),
                             'bokeh_js': plot_script,
                             'bokeh_div': plot_div}
                     })
