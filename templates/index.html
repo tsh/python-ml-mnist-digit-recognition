@@ -54,24 +54,32 @@
         function erase() {
             ctx.clearRect(0, 0, w, h);
             document.getElementById("canvasimg").style.display = "none";
+            clearElements();
         }
 
         function send() {
             var imgData = document.getElementById("canvas").toDataURL("image/png");
-            
+            clearElements();
+
             $.ajax({
                 url:"/recognize_image",
                 data: {img: imgData},
                 type: "POST",
                 success:function(result)
                 {
-                    console.log(result);
+{#                    clearElements();#}
                     $("#svc-result").text('SVC predicted: ' + result['svc']['predicted']
                         + '; SVC `predict_proba` max value for: ' + result['svc']['prob']);
                     $("#bokeh-div").append(result['svc']['bokeh_div']);
                     $("#bokeh-js").append(result['svc']['bokeh_js']);
                 }
             });
+        }
+
+        function clearElements(){
+            $("#svc-result").empty();
+            $("#bokeh-div").empty();
+            $("#bokeh-js").empty();
         }
 
         function findxy(res, e) {
