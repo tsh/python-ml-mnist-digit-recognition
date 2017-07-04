@@ -29,22 +29,15 @@ def recognize_image():
     img_data = re.sub(r'^data:image/.+;base64,', '', request.form['img'])
     img_bytes = base64.b64decode(img_data)
     img = Image.open(io.BytesIO(img_bytes))
+    img = img.split()[3]  # remove alpha
 
-    img.save('client_digit.png')
-
-    iar = np.array(img)
-    np.delete(iar, [3], axis=1)
-    balanced = []
-    for row in iar:
-        for pix in row:
-            balanced.append(mean(pix))
-
-    threshold(balanced)
-    nbalanced = np.array(balanced)
+    iarr = np.array(img)
+    flat = iarr.flatten()
+    threshold(flat)
     clf = joblib.load(os.path.join(CLASSIFIERS_DIR, 'svc.pkl'))
-    results = clf.predict([nbalanced])
+    results = clf.predict([flat])
     # Render chart
-    d = {'values': clf.predict_proba([nbalanced])[0]}
+    d = {'values': clf.predict_proba([flat])[0]}
     df = pd.DataFrame(d)
     p = Bar(df, values='values', label='index', title="SVC Probability", legend=False, toolbar_location=None)
 
