@@ -64,8 +64,8 @@ def prep_model():
     mndata = MNIST('data')
     images, labels = mndata.load_training()
 
-    images = images[:100]
-    labels = labels[:100]
+    images = images[:2000]
+    labels = labels[:2000]
 
     train_images, test_images, train_labels, test_labels = train_test_split(images, labels, train_size=0.8, random_state=0)
     for image in chain(train_images, test_images):
