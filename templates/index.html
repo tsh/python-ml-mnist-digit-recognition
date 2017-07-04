@@ -66,9 +66,9 @@
                 success:function(result)
                 {
                     console.log(result);
-                    $("#svc-result").text('SVC: ' + result['svc']);
-                    $("#bokeh-div").append(result['bokeh_div']);
-                    $("#bokeh-js").append(result['bokeh_js']);
+                    $("#svc-result").text('SVC: ' + result['svc']['predicted']);
+                    $("#bokeh-div").append(result['svc']['bokeh_div']);
+                    $("#bokeh-js").append(result['svc']['bokeh_js']);
                 }
             });
         }
@@ -109,11 +109,10 @@
         <p>Draw your number here: </p>
         <canvas id="canvas" width="28" height="28" style="border-style: dotted;"></canvas>
         <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
-        <canvas id="canvas-reseult" width="28" height="28"></canvas>
         <div id="svc-result"></div>
+        <input type="button" value="Try it!" id="btn" size="30" onclick="send()" style="top:55%;left:10%;">
+        <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="top:55%;left:15%;">
         <div id="bokeh-div"></div>
         <div id="bokeh-js"></div>
-        <input type="button" value="Try it!" id="btn" size="30" onclick="send()" style="position:absolute;top:55%;left:10%;">
-        <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
     </body>
 </html>
