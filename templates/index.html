@@ -84,10 +84,12 @@
 
         function findxy(res, e) {
             if (res == 'down') {
+                var canvasBorderWidth = parseInt($("#canvas").css("border-left-width"));
+
                 prevX = currX;
                 prevY = currY;
-                currX = e.clientX - canvas.offsetLeft;
-                currY = e.clientY - canvas.offsetTop;
+                currX = e.clientX - canvas.offsetLeft - canvasBorderWidth;
+                currY = e.clientY - canvas.offsetTop - canvasBorderWidth;
 
                 flag = true;
                 dot_flag = true;
@@ -116,7 +118,7 @@
     </head>
     <body onload="init()">
         <p>Draw your number here: </p>
-        <canvas id="canvas" width="28" height="28" style="border-style: dotted;"></canvas>
+        <canvas id="canvas" width="28" height="28" style="border-style: dotted;border-width: 1px"></canvas>
         <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
         <div id="svc-result"></div>
         <input type="button" value="Try it!" id="btn" size="30" onclick="send()" style="top:55%;left:10%;">
